@@ -23,8 +23,6 @@ export function getSensorCoverageCells(
   cols: number
 ): Set<string> {
   const covered = new Set<string>();
-  const [rR, rC] = roverPos;
-
   // 1. Always include immediate forward path cells up to sensorRange
   const lookAheadPath = activePath.slice(pathIndex + 1, pathIndex + 1 + sensorRange);
   for (const [r, c] of lookAheadPath) {
@@ -44,6 +42,7 @@ export function getSensorCoverageCells(
   }
 
   // 2. Also cover forward sensing radius around rover based on current heading
+  const [rR, rC] = roverPos;
   let dRow = 0;
   let dCol = 1; // default forward direction
   if (lookAheadPath.length > 0) {
@@ -71,7 +70,7 @@ export function getSensorCoverageCells(
  * Evaluates upcoming terrain risks and blocked nodes deterministically.
  */
 export function scanAhead(
-  roverPos: [number, number],
+  _roverPos: [number, number],
   activePath: [number, number][],
   pathIndex: number,
   sensorRange: number,
